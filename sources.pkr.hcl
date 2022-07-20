@@ -15,7 +15,7 @@ source "vsphere-iso" "main" {
   RAM                 = var.RAM
   RAM_reserve_all     = true
   firmware            = "bios"
-  boot_wait           = "5s"
+  boot_wait           = "10s"
 
    
   http_content        = {

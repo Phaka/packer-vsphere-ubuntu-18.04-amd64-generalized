@@ -35,6 +35,9 @@ d-i pkgsel/include string open-vm-tools openssh-server
 d-i grub-installer/only_debian boolean true
 d-i preseed/late_command string \
     echo '${ ssh_username } ALL=(ALL) NOPASSWD: ALL' > /target/etc/sudoers.d/${ ssh_username } ; \
-    in-target chmod 440 /etc/sudoers.d/${ ssh_username } ;
+    in-target chmod 440 /etc/sudoers.d/${ ssh_username } ; \
+    in-target sed -i 's/PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
 
+d-i debian-installer/splash boolean false
+d-i cdrom-detect/eject boolean true
 d-i finish-install/reboot_in_progress note

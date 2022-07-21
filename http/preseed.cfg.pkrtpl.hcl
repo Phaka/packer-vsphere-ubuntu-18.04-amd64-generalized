@@ -13,8 +13,8 @@ d-i keyboard-configuration/modelcode string pc105
 # User creation
 d-i passwd/user-fullname string ${ ssh_username }
 d-i passwd/username string ${ ssh_username }
-d-i passwd/user-password password ${ ssh_password }
-d-i passwd/user-password-again password ${ ssh_password }
+d-i passwd/user-password password "${ ssh_password }"
+d-i passwd/user-password-again password "${ ssh_password }"
 d-i user-setup/allow-password-weak boolean true
 
 # Disk and Partitioning setup
@@ -27,16 +27,15 @@ d-i partman/confirm_nooverwrite boolean true
 
 # Set root password
 d-i passwd/root-login boolean true
-d-i passwd/root-password password ${ ssh_password }
-d-i passwd/root-password-again password ${ ssh_password }
+d-i passwd/root-password password "${ ssh_password }"
+d-i passwd/root-password-again password "${ ssh_password }"
 
 # Package installations
 d-i pkgsel/include string open-vm-tools openssh-server
 d-i grub-installer/only_debian boolean true
 d-i preseed/late_command string \
     echo '${ ssh_username } ALL=(ALL) NOPASSWD: ALL' > /target/etc/sudoers.d/${ ssh_username } ; \
-    in-target chmod 440 /etc/sudoers.d/${ ssh_username } ; \
-    in-target sed -i 's/PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
+    in-target chmod 440 /etc/sudoers.d/${ ssh_username } ;
 
 d-i debian-installer/splash boolean false
 d-i cdrom-detect/eject boolean true
